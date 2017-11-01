@@ -1,9 +1,5 @@
 const fs = require('fs')
 describe('post routes', function () {
-  beforeEach(function () {
-    fs.writeFileSync(db, JSON.stringify([]))
-  })
-
   describe('GET /', function () {
     it('should return all posts', function (done) {
       const expected = { posts: [] }

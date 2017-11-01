@@ -2,10 +2,6 @@ const fs = require('fs')
 const { post } = require('../../models')
 
 describe('Post', function () {
-  beforeEach(function () {
-    fs.writeFileSync(db, JSON.stringify([]))
-  })
-
   describe('#get()', function () {
     it('should return all posts', function () {
       const actual = post.get()
