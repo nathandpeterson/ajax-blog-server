@@ -8,7 +8,7 @@ global.expect = chai.expect
 require('mocha')
 chai.use(require('chai-http'))
 
-const db = path.join(__dirname, '..', 'db', 'test.json')
+global.db = path.join(__dirname, '..', 'db', 'test.json')
 const clear = () => fs.writeFileSync(db, JSON.stringify([]))
 
 beforeEach(clear)

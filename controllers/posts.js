@@ -10,6 +10,11 @@ function create (req, res, next) {
   res.json({ post: result })
 }
 
+function show (req, res, next) {
+  const result = post.find(req.params.id)
+  res.json({ post: result })
+}
+
 module.exports = {
-  get, create
+  get, create, show
 }

@@ -27,6 +27,11 @@ function create (body) {
   return post
 }
 
+function find (id) {
+  const content = _read()
+  return content.find(el => el.id === id)
+}
+
 module.exports = {
-  get, create
+  get, create, find
 }
