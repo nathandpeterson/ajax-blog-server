@@ -20,7 +20,7 @@ describe('post routes', function () {
         .post('/posts')
         .send(post)
         .end((err, res) => {
-          expect(res.status).to.equal(200)
+          expect(res.status).to.equal(201)
           expect(res.body.post.id).to.be.ok
           expect(res.body.post.title).to.deep.equal('xxx')
           expect(res.body.post.content).to.deep.equal('yyy')

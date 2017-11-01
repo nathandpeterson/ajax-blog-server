@@ -7,7 +7,7 @@ function get (req, res, next) {
 
 function create (req, res, next) {
   const result = post.create(req.body)
-  res.json({ post: result })
+  res.status(201).json({ post: result })
 }
 
 function show (req, res, next) {
