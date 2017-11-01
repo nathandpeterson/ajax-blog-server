@@ -3,7 +3,7 @@ const { post } = require('../../models')
 
 describe('Post', function () {
   beforeEach(function () {
-    fs.writeFileSync(global.db, '[]')
+    fs.writeFileSync(db, JSON.stringify([]))
   })
 
   describe('#get()', function () {
@@ -12,6 +12,16 @@ describe('Post', function () {
       const expected = []
 
       expect(actual).to.deep.equal(expected)
+    })
+  })
+
+  describe('#create(body)', function () {
+    it('should return all posts', function () {
+      const actual = post.create({ title: 'xxx', content: 'yyy' })
+
+      expect(actual.id).to.be.ok
+      expect(actual.title).to.deep.equal('xxx')
+      expect(actual.content).to.deep.equal('yyy')
     })
   })
 })

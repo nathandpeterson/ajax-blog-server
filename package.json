@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js -i db/*",
     "start": "node app.js",
-    "test": "NODE_ENV=test PORT=2999 mocha --recursive --reporter=progress"
+    "test": "NODE_ENV=test PORT=2999 mocha --require test/support.js test/posts/*.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -17,7 +17,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.1",
-    "mecha-js": "^0.1.4",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "uuid": "^3.1.0"
   }
 }

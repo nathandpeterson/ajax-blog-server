@@ -5,6 +5,11 @@ function get (req, res, next) {
   res.json({ posts })
 }
 
+function create (req, res, next) {
+  const result = post.create(req.body)
+  res.json({ post: result })
+}
+
 module.exports = {
-  get
+  get, create
 }
