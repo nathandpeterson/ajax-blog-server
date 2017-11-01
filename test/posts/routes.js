@@ -40,5 +40,18 @@ describe('post routes', function () {
           done()
         })
     })
+
+    it('should destroy a specific post', function (done) {
+      const post = { id: uuid(), title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(db, JSON.stringify([ post ]))
+
+      chai.request(app)
+        .delete(`/posts/${post.id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          expect(res.body.post).to.deep.equal(post)
+          done()
+        })
+    })
   })
 })

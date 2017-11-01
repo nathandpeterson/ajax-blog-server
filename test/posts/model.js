@@ -30,4 +30,16 @@ describe('Post', function () {
       expect(actual).to.deep.equal(post)
     })
   })
+
+  describe('#destroy', function () {
+    it('should remove the specified post', function () {
+      const post = { id: 1, title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(global.db, JSON.stringify([ post ]))
+      const result = Post.destroy(1)
+      const actual = JSON.parse(fs.readFileSync(global.db))
+
+      expect(result).to.deep.equal(post)
+      expect(actual.length).to.equal(0)
+    })
+  })
 })

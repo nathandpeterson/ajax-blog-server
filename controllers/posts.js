@@ -15,6 +15,11 @@ function show (req, res, next) {
   res.json({ post: result })
 }
 
+function destroy (req, res, next) {
+  const result = post.destroy(req.params.id)
+  res.json({ post: result })
+}
+
 module.exports = {
-  get, create, show
+  get, create, show, destroy
 }

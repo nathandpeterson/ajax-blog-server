@@ -32,6 +32,17 @@ function find (id) {
   return content.find(el => el.id === id)
 }
 
+function destroy (id) {
+  const content = _read()
+  const post = content.find(el => el.id === id)
+  const index = content.indexOf(post)
+
+  content.splice(index, 1)
+  _write(content)
+
+  return post
+}
+
 module.exports = {
-  get, create, find
+  get, create, find, destroy
 }
