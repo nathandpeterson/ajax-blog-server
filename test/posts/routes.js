@@ -60,4 +60,22 @@ describe('post routes', function () {
         })
     })
   })
+
+  describe('PATCH /:id', function () {
+    it('should partially modify an existing post', function (done) {
+      const post = { id: uuid(), title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(db, JSON.stringify([ post ]))
+
+      const patch = { title: 'zzz' }
+      const expected = Object.assign(post, patch)
+      chai.request(app)
+        .patch(`/posts/${post.id}`)
+        .send(patch)
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          expect(res.body.post).to.deep.equal(expected)
+          done()
+        })
+    })
+  })
 })

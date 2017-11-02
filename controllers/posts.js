@@ -20,6 +20,11 @@ function destroy (req, res, next) {
   res.json({ post: result })
 }
 
+function patch (req, res, next) {
+  const result = post.patch(req.params.id, req.body)
+  res.json({ post: result })
+}
+
 module.exports = {
-  get, create, show, destroy
+  get, create, show, destroy, patch
 }

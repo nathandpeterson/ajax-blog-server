@@ -43,6 +43,17 @@ function destroy (id) {
   return post
 }
 
+function patch (id, patch) {
+  const post = destroy(id)
+  const content = _read()
+  const newPost = Object.assign(post, patch)
+
+  content.push(newPost)
+  _write(content)
+
+  return newPost
+}
+
 module.exports = {
-  get, create, find, destroy
+  get, create, find, destroy, patch
 }

@@ -42,4 +42,18 @@ describe('Post', function () {
       expect(actual.length).to.equal(0)
     })
   })
+
+  describe('#patch', function () {
+    it('should patch an existing record', function () {
+      const post = { id: 1, title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(global.db, JSON.stringify([ post ]))
+      const patch = { title: 'zzz' }
+      const result = Post.patch(1, patch)
+      const actual = JSON.parse(fs.readFileSync(global.db))
+      const expected = Object.assign(post, patch)
+
+      expect(result).to.deep.equal(expected)
+      expect(actual.length).to.equal(1)
+    })
+  })
 })
