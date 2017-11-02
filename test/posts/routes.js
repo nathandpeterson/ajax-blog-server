@@ -78,4 +78,21 @@ describe('post routes', function () {
         })
     })
   })
+
+  describe('PUT /:id', function () {
+    it('should completely modify an existing post', function (done) {
+      const post = { id: uuid(), title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(db, JSON.stringify([ post ]))
+
+      const replacement = { id: post.id, title: 'zzz', content: 'www' }
+      chai.request(app)
+        .put(`/posts/${post.id}`)
+        .send(replacement)
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          expect(res.body.post).to.deep.equal(replacement)
+          done()
+        })
+    })
+  })
 })
