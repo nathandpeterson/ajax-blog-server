@@ -125,15 +125,66 @@ describe('post routes', function () {
       const post = { id: uuid(), title: 'xxx', content: 'yyy' }
       fs.writeFileSync(db, JSON.stringify([ post ]))
 
-      const replacement = { id: post.id, title: 'zzz', content: 'www' }
+      const replacement = { title: 'zzz', content: 'www' }
+      const expected = Object.assign(post, replacement)
       chai.request(app)
         .put(`/posts/${post.id}`)
         .send(replacement)
         .end((err, res) => {
           expect(res.status).to.equal(200)
-          expect(res.body.post).to.deep.equal(replacement)
+          expect(res.body.post).to.deep.equal(expected)
           done()
         })
+    })
+
+    it('should ignore extra keys', function (done) {
+      const post = { id: uuid(), title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(db, JSON.stringify([ post ]))
+
+      const replacement = { title: 'zzz', content: 'www', tags: 'zzz' }
+      chai.request(app)
+      .put(`/posts/${post.id}`)
+      .send(replacement)
+      .end((err, res) => {
+        expect(res.status).to.equal(200)
+        expect(res.body.post.id).to.be.ok
+        expect(res.body.post.title).to.deep.equal('zzz')
+        expect(res.body.post.content).to.deep.equal('www')
+        expect(res.body.post.tags).to.be.undefined
+        done()
+      })
+    })
+
+    it('should require that the `content` field is present', function (done) {
+      const post = { id: uuid(), title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(db, JSON.stringify([ post ]))
+
+      const replacement = { title: 'zzz' }
+      chai.request(app)
+      .put(`/posts/${post.id}`)
+      .send(replacement)
+      .end((err, res) => {
+        expect(res.status).to.equal(400)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
+    })
+
+    it('should require that the `title` field is present', function (done) {
+      const post = { id: uuid(), title: 'xxx', content: 'yyy' }
+      fs.writeFileSync(db, JSON.stringify([ post ]))
+
+      const replacement = { content: 'www' }
+      chai.request(app)
+      .put(`/posts/${post.id}`)
+      .send(replacement)
+      .end((err, res) => {
+        expect(res.status).to.equal(400)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
     })
   })
 })
