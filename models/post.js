@@ -12,6 +12,10 @@ function _write (obj) {
   fs.writeFileSync(db, JSON.stringify(obj))
 }
 
+function _byId (id) {
+  return (el) => el.id === id
+}
+
 function get () {
   return _read()
 }
@@ -29,12 +33,12 @@ function create (body) {
 
 function find (id) {
   const content = _read()
-  return content.find(el => el.id === id)
+  return content.find(_byId(id))
 }
 
 function destroy (id) {
   const content = _read()
-  const post = content.find(el => el.id === id)
+  const post = content.find(_byId(id))
   const index = content.indexOf(post)
 
   content.splice(index, 1)
