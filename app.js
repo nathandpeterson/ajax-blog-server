@@ -3,6 +3,7 @@ const app = express()
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+require('./db/db.js')
 
 if (!process.env.NODE_ENV) app.use(morgan('dev'))
 
@@ -26,7 +27,7 @@ app.use((err, req, res, next) => {
   res.status(status).json({ error: { message } })
 })
 
-const listener = () => `Listening on port ${port}!`
+const listener = () => console.log(`Listening on port ${port}!`)
 app.listen(port, listener)
 
 module.exports = app

@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "nodemon app.js -i db/*",
     "start": "node app.js",
-    "test": "NODE_ENV=test PORT=2999 mocha"
+    "test": "NODE_ENV=test PORT=2999 mocha",
+    "knex": "knex"
   },
   "devDependencies": {
     "chai": "^3.5.0",
