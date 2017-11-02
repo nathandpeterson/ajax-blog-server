@@ -1,3 +1,3 @@
 module.exports = {
-  posts: require('./posts')
+  PostsRouter: require('./posts')
 }

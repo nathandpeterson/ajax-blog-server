@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { post:Post } = require('../../models')
+const { Post } = require('../../models')
 
 describe('Post', function () {
   describe('#get()', function () {

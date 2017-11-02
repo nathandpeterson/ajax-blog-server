@@ -9,8 +9,8 @@ if (!process.env.NODE_ENV) app.use(morgan('dev'))
 app.disable('x-powered-by')
 app.use(bodyParser.json())
 
-const { posts } = require('./routes')
-app.use('/posts', posts)
+const { PostsRouter } = require('./routes')
+app.use('/posts', PostsRouter)
 
 app.use((req, res, next) => {
   const status = 404
