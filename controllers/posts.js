@@ -26,6 +26,18 @@ function patch (req, res, next) {
   res.json({ post: result })
 }
 
+function exists (req, res, next) {
+  const post = Post.find(req.params.id)
+
+  if (!post) {
+    const status = 404
+    const message = `Post with an id of ${req.params.id} was not found`
+    next({ status, message })
+  }
+
+  return next()
+}
+
 function prune (req, res, next) {
   Object.keys(req.body).forEach(key => {
     if (!fields.includes(key)) delete req.body[key]
@@ -49,5 +61,5 @@ function complete (req, res, next) {
 
 module.exports = {
   get, create, show, destroy, patch,
-  validations: { prune, complete }
+  validations: { exists, prune, complete }
 }

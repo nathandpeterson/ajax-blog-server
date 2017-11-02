@@ -85,6 +85,17 @@ describe('post routes', function () {
         done()
       })
     })
+
+    it('should require that the id is a valid post id', function (done) {
+      chai.request(app)
+      .get(`/posts/99`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
+    })
   })
 
   describe('DELETE /:id', function () {
@@ -99,6 +110,17 @@ describe('post routes', function () {
           expect(res.body.post).to.deep.equal(post)
           done()
         })
+    })
+
+    it('should require that the id is a valid post id', function (done) {
+      chai.request(app)
+      .delete(`/posts/99`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
     })
   })
 
@@ -117,6 +139,18 @@ describe('post routes', function () {
           expect(res.body.post).to.deep.equal(expected)
           done()
         })
+    })
+
+    it('should require that the id is a valid post id', function (done) {
+      chai.request(app)
+      .patch(`/posts/99`)
+      .send({ title: 'zzz' })
+      .end((err, res) => {
+        expect(res.status).to.equal(404)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
     })
 
     it('should completely modify an existing post', function (done) {
@@ -151,6 +185,18 @@ describe('post routes', function () {
           expect(res.body.post).to.deep.equal(expected)
           done()
         })
+    })
+
+    it('should require that the id is a valid post id', function (done) {
+      chai.request(app)
+      .put(`/posts/99`)
+      .send({ title: 'zzz' })
+      .end((err, res) => {
+        expect(res.status).to.equal(404)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
     })
 
     it('should ignore extra keys', function (done) {
