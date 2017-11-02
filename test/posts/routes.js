@@ -29,6 +29,47 @@ describe('post routes', function () {
         done()
       })
     })
+
+    it('should ignore extra keys', function (done) {
+      const post = { title: 'xxx', content: 'yyy', tags: 'zzz' }
+      chai.request(app)
+      .post('/posts')
+      .send(post)
+      .end((err, res) => {
+        expect(res.status).to.equal(201)
+        expect(res.body.post.id).to.be.ok
+        expect(res.body.post.title).to.deep.equal('xxx')
+        expect(res.body.post.content).to.deep.equal('yyy')
+        expect(res.body.post.tags).to.be.undefined
+        done()
+      })
+    })
+
+    it('should require that the `content` field is present', function (done) {
+      const post = { title: 'xxx' }
+      chai.request(app)
+      .post('/posts')
+      .send(post)
+      .end((err, res) => {
+        expect(res.status).to.equal(400)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
+    })
+
+    it('should require that the `title` field is present', function (done) {
+      const post = { content: 'xxx' }
+      chai.request(app)
+      .post('/posts')
+      .send(post)
+      .end((err, res) => {
+        expect(res.status).to.equal(400)
+        expect(res.body.error).to.be.ok
+        expect(res.body.error.message).to.be.ok
+        done()
+      })
+    })
   })
 
   describe('GET /:id', function () {

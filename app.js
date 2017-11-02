@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-  console.log(err)
+  if (!process.env.NODE_ENV) console.log(err)
   const status = err.status || 500
   const message = err.message || 'Something went wrong!'
   res.status(status).json({ error: { message } })

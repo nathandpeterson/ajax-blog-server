@@ -1,4 +1,5 @@
 const { Post } = require('../models')
+const fields = [ 'title', 'content' ]
 
 function get (req, res, next) {
   const posts = Post.get()
@@ -25,6 +26,28 @@ function patch (req, res, next) {
   res.json({ post: result })
 }
 
+function prune (req, res, next) {
+  Object.keys(req.body).forEach(key => {
+    if (!fields.includes(key)) delete req.body[key]
+  })
+
+  next()
+}
+
+function complete (req, res, next) {
+  const errors = fields.filter(field => !req.body[field])
+    .map(key => `${key} is a required field`)
+
+  if (errors.length) {
+    const status = 400
+    const message = `Fields are missing: ${errors.join(', ')}`
+    return next({ status, message })
+  }
+
+  return next()
+}
+
 module.exports = {
-  get, create, show, destroy, patch
+  get, create, show, destroy, patch,
+  validations: { prune, complete }
 }
